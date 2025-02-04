@@ -2,7 +2,7 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
+  const response = NextResponse.next({
     request: {
       headers: request.headers,
     },
@@ -36,8 +36,14 @@ export async function middleware(request: NextRequest) {
 
   const { data: { session } } = await supabase.auth.getSession()
 
-  if (!session) {
+  // Se não estiver autenticado e tentar acessar uma rota protegida
+  if (!session && !request.nextUrl.pathname.startsWith('/auth')) {
     return NextResponse.redirect(new URL('/auth/signin', request.url))
+  }
+
+  // Se estiver autenticado e tentar acessar uma rota de autenticação
+  if (session && request.nextUrl.pathname.startsWith('/auth')) {
+    return NextResponse.redirect(new URL('/', request.url))
   }
 
   return response
@@ -45,18 +51,13 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/',
-    '/dashboard',
-    '/content',
-    '/content/:path*',
-    '/finance',
-    '/finance/:path*',
-    '/reports',
-    '/reports/:path*',
-    '/today',
-    '/this-week',
-    '/this-year',
-    '/competitors',
-    '/competitors/:path*',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public (public files)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|public).*)',
   ],
 } 

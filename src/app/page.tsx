@@ -2,93 +2,99 @@
 
 import { useEffect, useState } from 'react'
 import { Card } from '@/components/shared/Card'
-import { useNavigation } from '@/hooks/useNavigation'
+import { marketMetrics, recentActivity as mockRecentActivity, segmentDistribution } from '@/data/mockup'
+import { Activity } from '@/types/company'
+import { RecentActivity } from '@/components/RecentActivity'
+import { MetricsChart } from '@/components/MetricsChart'
 
-export default function HomePage() {
+export default function Home() {
   const [loading, setLoading] = useState(true)
-  const navigate = useNavigation()
+  const [activities, setActivities] = useState<Activity[]>([])
 
   useEffect(() => {
     // Simular carregamento de dados
     setTimeout(() => {
+      setActivities(mockRecentActivity)
       setLoading(false)
     }, 1000)
   }, [])
 
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Dashboard
-        </h1>
+    <div className="flex flex-col gap-6 p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card gradient="purple">
+          <h3 className="text-sm font-medium text-white/80">Total de Concorrentes</h3>
+          <p className="text-2xl font-bold text-white mt-2">{marketMetrics.totalCompetitors}</p>
+        </Card>
+        
+        <Card gradient="blue">
+          <h3 className="text-sm font-medium text-white/80">Menções</h3>
+          <p className="text-2xl font-bold text-white mt-2">{marketMetrics.mentions}</p>
+        </Card>
+        
+        <Card gradient="green">
+          <h3 className="text-sm font-medium text-white/80">Alertas Ativos</h3>
+          <p className="text-2xl font-bold text-white mt-2">{marketMetrics.activeAlerts}</p>
+        </Card>
+        
+        <Card gradient="orange">
+          <h3 className="text-sm font-medium text-white/80">Análises Realizadas</h3>
+          <p className="text-2xl font-bold text-white mt-2">{marketMetrics.analysisPerformed}</p>
+        </Card>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card
-          title="Total de Concorrentes"
-          value="24"
-          onClick={() => navigate.toCompetitors()}
-          className="cursor-pointer hover:shadow-lg transition-shadow"
-        />
-        
-        <Card
-          title="Menções nas Redes"
-          value="1.2k"
-          onClick={() => navigate.toSocialAnalytics()}
-          className="cursor-pointer hover:shadow-lg transition-shadow"
-        />
-        
-        <Card
-          title="Alertas Ativos"
-          value="8"
-          onClick={() => navigate.toNotifications()}
-          className="cursor-pointer hover:shadow-lg transition-shadow"
-        />
-        
-        <Card
-          title="Análises Realizadas"
-          value="156"
-          onClick={() => navigate.toAnalytics()}
-          className="cursor-pointer hover:shadow-lg transition-shadow"
-        />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-white">Distribuição por Segmento</h3>
+          <div className="h-[300px]">
+            <MetricsChart 
+              type="bar"
+              data={segmentDistribution}
+              index="name"
+              categories={['value']}
+              loading={loading}
+            />
+          </div>
+        </Card>
+
+        <Card>
+          <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-white">Atividades Recentes</h3>
+          <RecentActivity activities={activities} loading={loading} />
+        </Card>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Atividade Recente
-          </h3>
-          {/* Lista de atividades recentes */}
-          <div className="space-y-4">
-            {loading ? (
-              <div className="animate-pulse space-y-3">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-12 bg-gray-200 dark:bg-gray-700 rounded" />
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 dark:text-gray-400">
-                Nenhuma atividade recente
-              </p>
-            )}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-white">Tendências de Engajamento</h3>
+          <div className="h-[300px]">
+            <MetricsChart 
+              type="line"
+              data={marketMetrics.engagementTrends}
+              index="date"
+              categories={['value']}
+              loading={loading}
+            />
           </div>
-        </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+            Evolução do engajamento nos últimos 6 meses
+          </p>
+        </Card>
 
-        <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Distribuição por Segmento
-          </h3>
-          {/* Gráfico de distribuição */}
-          <div className="h-64 flex items-center justify-center">
-            {loading ? (
-              <div className="animate-pulse w-full h-full bg-gray-200 dark:bg-gray-700 rounded" />
-            ) : (
-              <p className="text-gray-500 dark:text-gray-400">
-                Nenhum dado disponível
-              </p>
-            )}
+        <Card>
+          <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-white">Crescimento de Seguidores</h3>
+          <div className="h-[300px]">
+            <MetricsChart 
+              type="line"
+              data={marketMetrics.followerGrowth}
+              index="date"
+              categories={['value']}
+              loading={loading}
+            />
           </div>
-        </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
+            Crescimento de seguidores nos últimos 6 meses
+          </p>
+        </Card>
       </div>
     </div>
   )

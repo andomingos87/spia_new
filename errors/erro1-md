@@ -1,0 +1,40 @@
+# Revisão e Correção Avançada com Cursor AI
+
+## Objetivo
+Realizar uma análise completa da aplicação, identificando e corrigindo erros, redundâncias, problemas de desempenho e inconsistências no código.
+
+## Escopo da Revisão
+- **Erros de compilação e execução**
+- **Linter e formatação**
+- **Estrutura de arquivos e duplicações**
+- **Componentes não utilizados**
+- **Rotas Next.js e otimizações**
+- **Conflitos de dependências**
+- **Práticas recomendadas para Supabase**
+- **Configuração e otimização do TailwindCSS**
+- **Validação e tipagem no TypeScript**
+
+## Prompt para Cursor AI
+
+```plaintext
+Analise e corrija todos os erros na aplicação baseada em Next.js (15.1.6), React (19.0.0), Supabase, TailwindCSS e TypeScript (5.x). A aplicação inclui dependências como @heroicons/react, @supabase/ssr, @supabase/supabase-js, @tremor/react, lucide-react e sonner.
+
+### Erros e Inconsistências
+1. **Logs de erro**: Leia os logs fornecidos e diagnostique falhas críticas.
+2. **Linter e formatação**: Execute `npm run lint` e corrija todos os problemas.
+3. **Arquivos duplicados e desnecessários**: Identifique arquivos redundantes ou não utilizados.
+4. **Componentes**: Detecte componentes não utilizados ou desnecessariamente complexos.
+5. **Rotas e API Next.js**: Verifique problemas de roteamento, API Routes e `getServerSideProps`/`getStaticProps`.
+6. **Dependências**: Resolva conflitos de versão, pacotes obsoletos e migrações necessárias.
+7. **Supabase**: Valide chamadas assíncronas, segurança dos dados e carregamento eficiente.
+8. **TailwindCSS**: Identifique classes redundantes, estilos não utilizados e possíveis otimizações.
+9. **TypeScript**: Garanta tipagem correta e elimine `any` ou `unknown` desnecessários.
+
+### Testes e Performance
+- Execute `npm run build` e corrija erros de compilação.
+- Analise o tempo de carregamento dos componentes e sugira melhorias.
+- Identifique e remova códigos bloqueadores da renderização (`useEffect`, SSR, etc.).
+- Sugira melhorias em re-renderizações desnecessárias.
+
+Forneça correções para cada erro detectado e explique as mudanças sugeridas.
+```

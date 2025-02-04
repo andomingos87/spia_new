@@ -1,18 +1,29 @@
-interface CardProps {
-  title: string
-  value: string
-  onClick?: () => void
-  className?: string
+import { ReactNode } from 'react'
+import { theme } from '@/config/theme'
+
+export interface CardProps {
+  gradient?: keyof typeof theme.colors.gradients
+  children: ReactNode
 }
 
-export function Card({ title, value, onClick, className = '' }: CardProps) {
+export function Card({ gradient, children }: CardProps) {
+  const gradientStyle = gradient
+    ? {
+        backgroundImage: `linear-gradient(135deg, ${theme.colors.gradients[gradient][0]}, ${theme.colors.gradients[gradient][1]})`,
+      }
+    : {}
+
   return (
     <div
-      onClick={onClick}
-      className={`p-4 bg-white dark:bg-gray-800 rounded-lg shadow ${className}`}
+      className={`p-6 rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl ${
+        gradient ? '' : 'bg-white dark:bg-gray-800'
+      }`}
+      style={{
+        ...gradientStyle,
+        borderRadius: theme.borderRadius.card,
+      }}
     >
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
-      <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">{value}</p>
+      {children}
     </div>
   )
 } 

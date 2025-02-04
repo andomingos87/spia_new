@@ -5,6 +5,7 @@ export const routes = {
     signup: '/auth/signup',
     verify: '/auth/verify',
     resetPassword: '/auth/reset-password',
+    forgot: '/auth/forgot'
   },
   dashboard: '/',
   competitors: {
@@ -17,10 +18,11 @@ export const routes = {
     social: '/analytics/social',
     market: '/analytics/market',
   },
-  settings: {
-    root: '/settings',
-    profile: '/settings/profile',
-    notifications: '/settings/notifications',
+  profile: '/profile',
+  company: '/minha-empresa',
+  support: {
+    bug: '/support/bug',
+    feedback: '/support/feedback',
   },
 } as const
 

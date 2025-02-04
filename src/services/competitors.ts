@@ -1,55 +1,45 @@
-import { Competitor } from '@/types/company'
-import { supabase } from '@/lib/supabase'
+import { Company } from '@/types/company'
+import { competitors as mockCompetitors } from '@/data/mockup'
 
 export async function getCompetitors() {
-  const { data, error } = await supabase
-    .from('competitors')
-    .select('*')
-    .order('name')
-
-  if (error) throw error
-  return data as Competitor[]
+  // Simulando delay de rede
+  await new Promise(resolve => setTimeout(resolve, 500))
+  return mockCompetitors
 }
 
 export async function getCompetitor(id: string) {
-  const { data, error } = await supabase
-    .from('competitors')
-    .select('*')
-    .eq('id', id)
-    .single()
-
-  if (error) throw error
-  return data as Competitor
+  await new Promise(resolve => setTimeout(resolve, 500))
+  const competitor = mockCompetitors.find(c => c.id === id)
+  if (!competitor) throw new Error('Competitor not found')
+  return competitor
 }
 
-export async function createCompetitor(competitor: Partial<Competitor>) {
-  const { data, error } = await supabase
-    .from('competitors')
-    .insert([competitor])
-    .select()
-    .single()
-
-  if (error) throw error
-  return data as Competitor
+export async function createCompetitor(competitor: Partial<Company>) {
+  await new Promise(resolve => setTimeout(resolve, 500))
+  const newCompetitor: Company = {
+    ...mockCompetitors[0], // Base template
+    ...competitor,
+    id: Math.random().toString(36).substr(2, 9),
+  }
+  mockCompetitors.push(newCompetitor)
+  return newCompetitor
 }
 
-export async function updateCompetitor(id: string, competitor: Partial<Competitor>) {
-  const { data, error } = await supabase
-    .from('competitors')
-    .update(competitor)
-    .eq('id', id)
-    .select()
-    .single()
-
-  if (error) throw error
-  return data as Competitor
+export async function updateCompetitor(id: string, updates: Partial<Company>) {
+  await new Promise(resolve => setTimeout(resolve, 500))
+  const index = mockCompetitors.findIndex(c => c.id === id)
+  if (index === -1) throw new Error('Competitor not found')
+  
+  mockCompetitors[index] = {
+    ...mockCompetitors[index],
+    ...updates,
+  }
+  return mockCompetitors[index]
 }
 
 export async function deleteCompetitor(id: string) {
-  const { error } = await supabase
-    .from('competitors')
-    .delete()
-    .eq('id', id)
-
-  if (error) throw error
+  await new Promise(resolve => setTimeout(resolve, 500))
+  const index = mockCompetitors.findIndex(c => c.id === id)
+  if (index === -1) throw new Error('Competitor not found')
+  mockCompetitors.splice(index, 1)
 } 

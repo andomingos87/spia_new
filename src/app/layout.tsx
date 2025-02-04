@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { Toaster } from 'sonner'
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
+import { ModalsProvider } from '@/components/modals/ModalsProvider'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,7 +40,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ThemeProvider>
-          <DashboardLayout>{children}</DashboardLayout>
+          <ModalsProvider>
+            <DashboardLayout>{children}</DashboardLayout>
+          </ModalsProvider>
         </ThemeProvider>
         <Toaster richColors position="top-right" />
       </body>

@@ -1,60 +1,51 @@
 'use client'
 
 import Link from 'next/link'
-import { AuthLayout } from '@/components/auth/AuthLayout'
+import { routes } from '@/config/routes'
 
 export default function VerifyEmail() {
   return (
-    <AuthLayout
-      title="Check Your Email"
-      subtitle="We've sent you a verification link"
-    >
-      <div className="mt-8 space-y-6">
-        <div className="rounded-lg bg-blue-50 p-6 text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-            <svg
-              className="h-6 w-6 text-blue-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-              />
-            </svg>
+    <div className="w-full max-w-sm">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Verifique seu email
+        </h2>
+        <p className="mt-2 text-base text-gray-700 dark:text-gray-300">
+          Enviamos um link de confirmação para o seu email. Por favor, verifique sua caixa de entrada e spam.
+        </p>
+      </div>
+
+      <div className="mt-8 space-y-4">
+        <div className="bg-blue-50 dark:bg-blue-900/50 rounded-lg p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg
+                className="h-5 w-5 text-blue-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-blue-700 dark:text-blue-300">
+                Após confirmar seu email, você será redirecionado para a página de login.
+              </p>
+            </div>
           </div>
-          <h3 className="mt-3 text-sm font-medium text-blue-800">
-            Verification Email Sent
-          </h3>
-          <p className="mt-2 text-sm text-blue-700">
-            Please check your email inbox and click the verification link to complete your registration.
-          </p>
         </div>
 
-        <div className="text-center text-sm">
-          <p className="text-gray-600">
-            Didn't receive the email?{' '}
-            <Link
-              href="/auth/signup"
-              className="font-medium text-blue-600 hover:text-blue-500"
-            >
-              Try again
-            </Link>
-          </p>
-          <p className="mt-2 text-gray-600">
-            Or{' '}
-            <Link
-              href="/auth/signin"
-              className="font-medium text-blue-600 hover:text-blue-500"
-            >
-              return to sign in
-            </Link>
-          </p>
-        </div>
+        <Link
+          href={routes.auth.signin}
+          className="block w-full text-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900"
+        >
+          Voltar para o login
+        </Link>
       </div>
-    </AuthLayout>
+    </div>
   )
 } 

@@ -11,6 +11,8 @@ interface ImageUploadProps {
   className?: string
 }
 
+const PLACEHOLDER_IMAGE = 'https://picsum.photos/400/400?grayscale'
+
 export function ImageUpload({
   defaultImage,
   onChange,
@@ -103,6 +105,7 @@ export function ImageUpload({
               alt="Preview"
               fill
               className="object-cover"
+              unoptimized={preview.startsWith('data:')}
             />
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <div className="flex flex-col items-center gap-2 text-white">
@@ -122,17 +125,25 @@ export function ImageUpload({
             </button>
           </>
         ) : (
-          <div className="flex flex-col items-center gap-2 p-4 text-center">
-            <Upload className="w-8 h-8 text-gray-400 dark:text-gray-500" />
-            <div className="space-y-1">
-              <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                Arraste e solte uma imagem aqui
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                ou clique para selecionar
-              </p>
+          <>
+            <Image
+              src={PLACEHOLDER_IMAGE}
+              alt="Upload placeholder"
+              fill
+              className="object-cover opacity-20"
+            />
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center">
+              <Upload className="w-8 h-8 text-gray-400 dark:text-gray-500" />
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                  Arraste e solte uma imagem aqui
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  ou clique para selecionar
+                </p>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </label>
     </div>
