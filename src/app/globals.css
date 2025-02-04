@@ -19,3 +19,17 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer utilities {
+  .modal-open {
+    overflow: hidden;
+  }
+
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm;
+  }
+
+  .modal-content {
+    @apply fixed inset-0 z-50 overflow-y-auto;
+  }
+}

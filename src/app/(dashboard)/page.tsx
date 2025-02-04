@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Card } from '@/components/shared/Card'
 import { useNavigation } from '@/hooks/useNavigation'
 
-export default function HomePage() {
+export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
   const navigate = useNavigation()
 
@@ -92,4 +92,4 @@ export default function HomePage() {
       </div>
     </div>
   )
-}
+} 
